@@ -10,7 +10,7 @@ jobs:
     name: Rust
     runs-on: ${{ matrix.os }}
     env:
-      CI: true
+      SOMETHING: other thing
 
     strategy:
       matrix:
