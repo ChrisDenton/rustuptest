@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        shell: pwsh
+        run: |
+            rustup update --no-self-update nightly
+            rustup default nightly
+            rustup component add --toolchain nightly rust-src
+            # We always use a nightly rustfmt, regardless of channel, because we need
+            # --file-lines.
+            rustup toolchain add nightly --profile minimal
+            rustup component add --toolchain nightly rustfmt
