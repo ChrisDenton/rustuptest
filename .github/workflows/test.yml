@@ -24,7 +24,7 @@ jobs:
       - name: Install Rust toolchain
         run: |
           #rustup update --no-self-update ${{ env.RUST_CHANNEL }}
-          rustup default ${{ env.RUST_CHANNEL }}
+          #rustup default ${{ env.RUST_CHANNEL }}
           rustup component add --toolchain ${{ env.RUST_CHANNEL }} rust-src
           rustup toolchain add nightly --profile minimal
           rustup component add --toolchain nightly rustfmt
