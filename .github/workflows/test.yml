@@ -22,7 +22,6 @@ env:
 
 jobs:
   rust:
-    if: github.repository == 'rust-lang/rust-analyzer'
     name: Rust
     runs-on: ${{ matrix.os }}
     env:
