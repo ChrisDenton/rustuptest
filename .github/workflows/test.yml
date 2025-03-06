@@ -1,6 +1,3 @@
-# Please make sure that the `needs` field for the `conclusion` job
-# are updated when adding new jobs!
-
 on:
   push:
     branches: [ "main" ]
@@ -9,13 +6,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
+  rust:
+    name: Rust
+    runs-on: ${{ matrix.os }}
+    env:
+      CI: 1
+
+    strategy:
+      matrix:
+        os: [windows-latest, windows-latest, windows-latest, windows-latest, windows-latest]
+
     steps:
-      - name: Rust
-        env:
-          CI: 1
+      - name: Install Rust toolchain
         run: |
-          # rustup component add --toolchain stable rust-src
+          rustup component add --toolchain stable rust-src
           rustup toolchain add nightly --profile minimal
           rustup component add --toolchain nightly rustfmt
