@@ -19,6 +19,6 @@ jobs:
     steps:
       - name: Install Rust toolchain
         run: |
-          rustup self update
           rustup toolchain add nightly --profile minimal
+          rustup self update
           rustup component add --toolchain nightly rustfmt
