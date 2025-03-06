@@ -7,12 +7,19 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CI: 1
+  RUST_BACKTRACE: short
+  RUSTFLAGS: "-D warnings -D elided_lifetimes_in_paths -D explicit_outlives_requirements -D unsafe_op_in_unsafe_fn -D unused_extern_crates -D unused_lifetimes -D unreachable_pub"
+  RUSTUP_MAX_RETRIES: 10
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Install Rust toolchain
         shell: pwsh
         run: |
             rustup update --no-self-update nightly
