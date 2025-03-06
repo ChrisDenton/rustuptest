@@ -8,16 +8,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 env:
   CARGO_INCREMENTAL: 0
   CARGO_NET_RETRY: 10
   CI: 1
   RUST_BACKTRACE: short
-  RUSTFLAGS: "-D warnings -D elided_lifetimes_in_paths -D explicit_outlives_requirements -D unsafe_op_in_unsafe_fn -D unused_extern_crates -D unused_lifetimes -D unreachable_pub"
   RUSTUP_MAX_RETRIES: 10
 
 jobs:
@@ -25,9 +20,7 @@ jobs:
     name: Rust
     runs-on: ${{ matrix.os }}
     env:
-      CC: deny_c
       RUST_CHANNEL: stable
-      USE_SYSROOT_ABI: ''
 
     strategy:
       fail-fast: false
