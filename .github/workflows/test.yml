@@ -14,18 +14,32 @@ env:
   RUST_BACKTRACE: short
   RUSTFLAGS: "-D warnings -D elided_lifetimes_in_paths -D explicit_outlives_requirements -D unsafe_op_in_unsafe_fn -D unused_extern_crates -D unused_lifetimes -D unreachable_pub"
   RUSTUP_MAX_RETRIES: 10
+  RUSTUP_AUTO_INSTALL: 0
 
 jobs:
-  build:
-    runs-on: windows-latest
+  rust:
+    name: Rust
+    runs-on: ${{ matrix.os }}
+    env:
+      CC: deny_c
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
       - name: Install Rust toolchain
-        shell: pwsh
         run: |
-            rustup update --no-self-update nightly
-            rustup default nightly
-            rustup component add --toolchain nightly rust-src
-            # We always use a nightly rustfmt, regardless of channel, because we need
-            # --file-lines.
-            rustup toolchain add nightly --profile minimal
-            rustup component add --toolchain nightly rustfmt
+          rustup update --no-self-update ${{ env.RUST_CHANNEL }}
+          rustup default ${{ env.RUST_CHANNEL }}
+          rustup component add --toolchain ${{ env.RUST_CHANNEL }} rust-src
+          # We always use a nightly rustfmt, regardless of channel, because we need
+          # --file-lines.
+          rustup toolchain add nightly --profile minimal
+          rustup component add --toolchain nightly rustfmt
