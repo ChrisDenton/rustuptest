@@ -20,5 +20,5 @@ jobs:
       - name: Install Rust toolchain
         run: |
           rustup toolchain add nightly --profile minimal
-          rustup self update
+          Start-Sleep 1
           rustup component add --toolchain nightly rustfmt
