@@ -9,7 +9,7 @@ jobs:
   rust:
     name: Rust
     runs-on: ${{ matrix.os }}
-     env:
+    env:
       CI: true
 
     strategy:
