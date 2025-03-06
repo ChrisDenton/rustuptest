@@ -24,7 +24,7 @@ jobs:
       - name: Install Rust toolchain
         run: |
           #rustup update --no-self-update ${{ env.RUST_CHANNEL }}
-          #rustup default ${{ env.RUST_CHANNEL }}
+          rustup default ${{ env.RUST_CHANNEL }}
           #rustup component add --toolchain ${{ env.RUST_CHANNEL }} rust-src
           # We always use a nightly rustfmt, regardless of channel, because we need
           # --file-lines.
